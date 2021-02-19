@@ -31,7 +31,7 @@ void CardReader::onCardDetected(void (*callback)()) {
     /*
      *   If we got here it means the card is present and was successfully read.
      *   Just invoke the callback that user supplied,
-     *   halt the card and pause for a couple of seconds
+     *   disengage with the card and pause for a couple of seconds
      */
     callback();
     reader.PICC_HaltA();
