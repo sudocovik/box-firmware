@@ -29,14 +29,22 @@ void CardReader::onCardDetected(void (*callback)(String)) {
         return;
 
     /*
-     *   If we got here it means the card is present and was successfully read.
-     *   Just invoke the callback that user supplied,
-     *   disengage with the card and pause for a couple of seconds
+     *   If we got here it means the card is present and
+     *   we should try to read UID and convert it to human readable HEX string.
+     *   Disengaging with the card is required because we read all the information needed.
      */
     String uid = uidToHexString(reader.uid);
-    callback(uid);
+
     reader.PICC_HaltA();
-    delay(pauseTime);
+
+    /*
+     *   Empty UID string means something went wrong (bad card, error in the program, ...)
+     *   while non-empty UID means we can invoke the callback that user supplied and pause for a couple of seconds
+     */
+    if (uid.isEmpty() == false) {
+        callback(uid);
+        delay(pauseTime);
+    }
 }
 
 String CardReader::uidToHexString(MFRC522::Uid uid) {
