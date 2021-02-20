@@ -8,6 +8,8 @@ class CardReader {
         MFRC522 reader;
         unsigned long pauseTime;
 
+        static String uidToHexString(MFRC522::Uid uid);
+
     public:
         CardReader(
                 byte chipSelectPin,
@@ -20,7 +22,7 @@ class CardReader {
 
         void pauseAfterSuccessfulRead(unsigned long milliseconds);
 
-        void onCardDetected(void (*callback)());
+        void onCardDetected(void (*callback)(String));
 };
 
 #endif

@@ -15,24 +15,9 @@ void setup() {
 }
 
 void loop() {
-    /*
-    if (mfrc522.uid.size == 0) {
-        Serial.println("Bad card (size = 0)");
-    } else {
-        char tag[sizeof(mfrc522.uid.uidByte) * 4] = { 0 };
-        for (int i = 0; i < mfrc522.uid.size; i++) {
-            char buff[5]; // 3 digits, dash and \0.
-            snprintf(buff, sizeof(buff), "%s%d", i ? "-" : "", mfrc522.uid.uidByte[i]);
-            strncat(tag, buff, sizeof(tag));
-        };
-        Serial.println("Good scan: ");
-        Serial.println(tag);
-    };
-    */
-
     reader.pauseAfterSuccessfulRead(2000);
 
-    reader.onCardDetected([]() {
-        Serial.println("Test");
+    reader.onCardDetected([](String uid) {
+        Serial.println("Detected new card with UID: " + uid);
     });
 }
