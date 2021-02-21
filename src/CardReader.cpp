@@ -21,7 +21,7 @@ void CardReader::pauseAfterSuccessfulRead(unsigned long milliseconds) {
     pauseTime = milliseconds;
 }
 
-void CardReader::onCardDetected(void (*callback)(String)) {
+void CardReader::onCardDetected(void (*callback)(const String)) {
     if (reader.PICC_IsNewCardPresent() == false)
         return;
 
@@ -33,7 +33,7 @@ void CardReader::onCardDetected(void (*callback)(String)) {
      *   we should try to read UID and convert it to human readable HEX string.
      *   Disengaging with the card is required because we read all the information needed.
      */
-    String uid = uidToHexString(reader.uid);
+    const String uid = uidToHexString(reader.uid);
 
     reader.PICC_HaltA();
 

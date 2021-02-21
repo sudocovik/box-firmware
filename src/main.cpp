@@ -17,7 +17,7 @@ void setup() {
 void loop() {
     reader.pauseAfterSuccessfulRead(2000);
 
-    reader.onCardDetected([](String uid) {
+    reader.onCardDetected([](const String uid) {
         Serial.println("Detected new card with UID: " + uid);
     });
 }

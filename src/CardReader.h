@@ -22,7 +22,7 @@ class CardReader {
 
         void pauseAfterSuccessfulRead(unsigned long milliseconds);
 
-        void onCardDetected(void (*callback)(String));
+        void onCardDetected(void (*callback)(const String));
 };
 
 #endif
