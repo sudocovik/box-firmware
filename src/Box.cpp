@@ -6,6 +6,11 @@ Box::Box(byte lockPin, byte statePin) {
     _statePin = statePin;
 }
 
+void Box::setupPins() const {
+    pinMode(_lockPin, OUTPUT);
+    pinMode(_statePin, INPUT_PULLUP);
+}
+
 bool Box::isClosed() const {
     return !digitalRead(_statePin);
 }

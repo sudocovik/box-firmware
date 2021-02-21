@@ -12,6 +12,8 @@ class Box {
             byte statePin
         );
 
+        void setupPins() const;
+
         bool isClosed() const;
 
         void unlock() const;

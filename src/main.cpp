@@ -15,6 +15,7 @@ void setup() {
     Serial.begin(9600);
     while (!Serial);
 
+    box.setupPins();
     reader.begin();
     reader.dump();
 }
