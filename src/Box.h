@@ -12,7 +12,7 @@ class Box {
             byte statePin
         );
 
-        void setupPins() const;
+        void configurePins() const;
 
         bool isClosed() const;
 

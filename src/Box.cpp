@@ -6,7 +6,7 @@ Box::Box(byte lockPin, byte statePin) {
     _statePin = statePin;
 }
 
-void Box::setupPins() const {
+void Box::configurePins() const {
     pinMode(_lockPin, OUTPUT);
     pinMode(_statePin, INPUT_PULLUP);
 }
