@@ -27,6 +27,11 @@ void loop() {
 
         if (box.isClosed()) {
             Serial.println("Box is closed, authorizing card with the server...");
+
+            // Imagine successful authorization
+            box.unlock();
+            delay(4000);
+            box.lock();
         }
         else {
             Serial.println("Box is opened, skipping...");

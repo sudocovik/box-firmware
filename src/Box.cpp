@@ -9,3 +9,11 @@ Box::Box(byte lockPin, byte statePin) {
 bool Box::isClosed() const {
     return !digitalRead(_statePin);
 }
+
+void Box::unlock() const {
+    digitalWrite(_lockPin, HIGH);
+}
+
+void Box::lock() const {
+    digitalWrite(_lockPin, LOW);
+}

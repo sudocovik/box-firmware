@@ -13,6 +13,10 @@ class Box {
         );
 
         bool isClosed() const;
+
+        void unlock() const;
+
+        void lock() const;
 };
 
 #endif
