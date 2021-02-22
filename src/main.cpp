@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <CardReader.h>
 #include <Box.h>
+#include <WiFiManager.h>
 
 #define RST_PIN     D1
 #define SS_PIN      D2
@@ -18,6 +19,13 @@ void setup() {
     box.configurePins();
     reader.begin();
     reader.dump();
+
+    WiFiManager wifiManager;
+    bool connected = wifiManager.autoConnect("BoxAP", "password");
+
+    if (connected) {
+        Serial.println("Successfully connected to network!");
+    }
 }
 
 void loop() {
