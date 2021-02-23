@@ -2,6 +2,8 @@
 #include <CardReader.h>
 #include <Box.h>
 #include <WiFiManager.h>
+#include <ESP8266HTTPClient.h>
+#include <WiFiClient.h>
 
 #define RST_PIN     D1
 #define SS_PIN      D2
@@ -11,6 +13,8 @@
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
+
+String httpGETRequest(const char* url);
 
 void setup() {
     Serial.begin(9600);
@@ -26,6 +30,8 @@ void setup() {
     if (connected) {
         Serial.println("Successfully connected to network!");
     }
+
+    String response = httpGETRequest("http://www.google1.hr");
 }
 
 void loop() {
@@ -46,4 +52,30 @@ void loop() {
             Serial.println("Box is opened, skipping...");
         }
     });
+}
+
+String httpGETRequest(const char* url) {
+    WiFiClient client;
+    HTTPClient http;
+
+    http.begin(client, url);
+
+    // Send HTTP POST request
+    int httpResponseCode = http.GET();
+
+    String payload = "{}";
+
+    if (httpResponseCode>0) {
+        Serial.print("HTTP Response code: ");
+        Serial.println(httpResponseCode);
+        payload = http.getString();
+    }
+    else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+    }
+    // Free resources
+    http.end();
+
+    return payload;
 }
