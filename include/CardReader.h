@@ -2,6 +2,7 @@
 #define CARDREADER_H
 
 #include <MFRC522.h>
+#include <Card.h>
 
 class CardReader {
     private:
@@ -20,7 +21,7 @@ public:
 
         void pauseAfterSuccessfulRead(unsigned long milliseconds);
 
-        void onCardDetected(void (*callback)(const String));
+        void onCardDetected(void (*callback)(Card));
 };
 
 #endif
