@@ -18,7 +18,7 @@ class Card {
 
         String toUid() const;
 
-        Card::AuthorizationResult authorize();
+        Card::AuthorizationResult authorize() const;
 };
 
 class Card::AuthorizationResult {

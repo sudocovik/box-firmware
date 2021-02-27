@@ -34,7 +34,7 @@ String Card::toUid() const {
     return UID;
 }
 
-Card::AuthorizationResult Card::authorize() {
+Card::AuthorizationResult Card::authorize() const {
     WiFiClient client;
     HTTPClient http;
 
