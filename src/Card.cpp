@@ -37,9 +37,11 @@ Card::AuthorizationResult Card::authorize() {
     WiFiClient client;
     HTTPClient http;
 
-    http.begin(client, "http://192.168.1.2/api/test");
+    http.begin(client, "http://192.168.1.2/api/authorize-card");
 
-    int responseCode = http.GET();
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    int responseCode = http.POST("uid=" + toUid());
 
     if (responseCode < 1) {
         return Card::AuthorizationResult(false);
