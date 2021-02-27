@@ -30,8 +30,6 @@ void setup() {
     if (connected) {
         Serial.println("Successfully connected to network!");
     }
-
-    String response = httpGETRequest("http://www.google1.hr");
 }
 
 void loop() {
@@ -43,10 +41,11 @@ void loop() {
         if (box.isClosed()) {
             Serial.println("Box is closed, authorizing card with the server...");
 
-            // Imagine successful authorization
-            box.unlock();
-            delay(4000);
-            box.lock();
+            if (httpGETRequest("http://192.168.1.2/api/test") == "yaay!") {
+                box.unlock();
+                delay(4000);
+                box.lock();
+            }
         }
         else {
             Serial.println("Box is opened, skipping...");
