@@ -21,6 +21,7 @@ String Card::uidToHexString(MFRC522::Uid uid) {
 
     hexString.trim();
     hexString.toUpperCase();
+    hexString.replace(' ', '-');
 
     return hexString;
 }
