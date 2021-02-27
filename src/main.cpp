@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include <CardReader.h>
 #include <Box.h>
+#include <ESP8266HTTPClient.h>
+#include <WiFiClient.h>
+#include <NetworkManager.h>
 
 #define RST_PIN     D1
 #define SS_PIN      D2
@@ -8,8 +11,13 @@
 #define STATE_PIN   D4
 #define LOCK_PIN    D8
 
+#define ACCESS_POINT_NAME       "BoxAP"
+#define ACCESS_POINT_PASSWORD   "password"
+
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
+
+String httpGETRequest(const char* url);
 
 void setup() {
     Serial.begin(9600);
@@ -18,6 +26,11 @@ void setup() {
     box.configurePins();
     reader.begin();
     reader.dump();
+
+    NetworkManager manager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
+    manager.connect([]() {
+        Serial.println("Successfully connected to network!");
+    });
 }
 
 void loop() {
@@ -29,13 +42,40 @@ void loop() {
         if (box.isClosed()) {
             Serial.println("Box is closed, authorizing card with the server...");
 
-            // Imagine successful authorization
-            box.unlock();
-            delay(4000);
-            box.lock();
+            if (httpGETRequest("http://192.168.1.2/api/test") == "yaay!") {
+                box.unlock();
+                delay(4000);
+                box.lock();
+            }
         }
         else {
             Serial.println("Box is opened, skipping...");
         }
     });
+}
+
+String httpGETRequest(const char* url) {
+    WiFiClient client;
+    HTTPClient http;
+
+    http.begin(client, url);
+
+    // Send HTTP POST request
+    int httpResponseCode = http.GET();
+
+    String payload = "{}";
+
+    if (httpResponseCode>0) {
+        Serial.print("HTTP Response code: ");
+        Serial.println(httpResponseCode);
+        payload = http.getString();
+    }
+    else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+    }
+    // Free resources
+    http.end();
+
+    return payload;
 }
