@@ -36,8 +36,8 @@ void setup() {
 void loop() {
     reader.pauseAfterSuccessfulRead(2000);
 
-    reader.onCardDetected([](const String uid) {
-        Serial.println("Detected new card with UID: " + uid);
+    reader.onCardDetected([](Card card) {
+        Serial.println("Detected new card with UID: " + card.toUid());
 
         if (box.isOpened()) {
             Serial.println("Box is opened, skipping...");
