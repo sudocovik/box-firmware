@@ -6,6 +6,8 @@ Card::Card(MFRC522::Uid uid) {
 }
 
 String Card::uidToHexString(MFRC522::Uid uid) {
+    if (uid.size == 0) return "";
+
     String hexString = "";
 
     for(unsigned short int i = 0; i < uid.size; i++) {
