@@ -1,15 +1,18 @@
 #include <Arduino.h>
 #include <CardReader.h>
 #include <Box.h>
-#include <WiFiManager.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
+#include <NetworkManager.h>
 
 #define RST_PIN     D1
 #define SS_PIN      D2
 
 #define STATE_PIN   D4
 #define LOCK_PIN    D8
+
+#define ACCESS_POINT_NAME       "BoxAP"
+#define ACCESS_POINT_PASSWORD   "password"
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
@@ -24,12 +27,10 @@ void setup() {
     reader.begin();
     reader.dump();
 
-    WiFiManager wifiManager;
-    bool connected = wifiManager.autoConnect("BoxAP", "password");
-
-    if (connected) {
+    NetworkManager manager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
+    manager.connect([]() {
         Serial.println("Successfully connected to network!");
-    }
+    });
 }
 
 void loop() {
