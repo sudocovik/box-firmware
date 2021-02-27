@@ -39,17 +39,17 @@ void loop() {
     reader.onCardDetected([](const String uid) {
         Serial.println("Detected new card with UID: " + uid);
 
-        if (box.isClosed()) {
-            Serial.println("Box is closed, authorizing card with the server...");
-
-            if (httpGETRequest("http://192.168.1.2/api/test") == "yaay!") {
-                box.unlock();
-                delay(4000);
-                box.lock();
-            }
-        }
-        else {
+        if (box.isOpened()) {
             Serial.println("Box is opened, skipping...");
+            return;
+        }
+
+        Serial.println("Box is closed, authorizing card with the server...");
+
+        if (httpGETRequest("http://192.168.1.2/api/test") == "yaay!") {
+            box.unlock();
+            delay(4000);
+            box.lock();
         }
     });
 }
