@@ -11,6 +11,8 @@ class Card {
 
     public:
         explicit Card(MFRC522::Uid uid);
+
+    bool isUidValid();
 };
 
 #endif

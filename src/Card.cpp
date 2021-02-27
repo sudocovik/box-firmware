@@ -22,3 +22,7 @@ String Card::uidToHexString(MFRC522::Uid uid) {
 
     return hexString;
 }
+
+bool Card::isUidValid() {
+    return UID.isEmpty() == false;
+}
