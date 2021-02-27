@@ -7,6 +7,8 @@ class Card {
     private:
         String UID = "";
 
+        class AuthorizationResult;
+
         static String uidToHexString(MFRC522::Uid uid);
 
     public:
@@ -15,6 +17,20 @@ class Card {
         bool isUidValid();
 
         String toUid() const;
+
+        Card::AuthorizationResult authorize();
+};
+
+class Card::AuthorizationResult {
+    private:
+        bool successful;
+
+    public:
+        explicit AuthorizationResult(bool isSuccessful);
+
+        Card::AuthorizationResult onSuccess(void (*callback)());
+
+        Card::AuthorizationResult onFailure(void (*callback)());
 };
 
 #endif

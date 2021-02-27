@@ -30,3 +30,27 @@ bool Card::isUidValid() {
 String Card::toUid() const {
     return UID;
 }
+
+Card::AuthorizationResult Card::authorize() {
+    return Card::AuthorizationResult(false);
+}
+
+Card::AuthorizationResult::AuthorizationResult(bool isSuccessful) {
+    successful = isSuccessful;
+}
+
+Card::AuthorizationResult Card::AuthorizationResult::onSuccess(void (*callback)()) {
+    if (successful) {
+        callback();
+    }
+
+    return *this;
+}
+
+Card::AuthorizationResult Card::AuthorizationResult::onFailure(void (*callback)()) {
+    if (!successful) {
+        callback();
+    }
+
+    return *this;
+}

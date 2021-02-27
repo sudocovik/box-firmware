@@ -33,6 +33,18 @@ void setup() {
     });
 }
 
+void grantAccess() {
+    Serial.println("Successful authorization! Opening the box...");
+
+    box.unlock();
+    delay(4000);
+    box.lock();
+}
+
+void notifyForbiddenAccess() {
+    Serial.println("Failed authorization!");
+}
+
 void loop() {
     reader.pauseAfterSuccessfulRead(2000);
 
@@ -46,11 +58,15 @@ void loop() {
 
         Serial.println("Box is closed, authorizing card with the server...");
 
-        if (httpGETRequest("http://192.168.1.2/api/test") == "yaay!") {
+        /* if (httpGETRequest("http://192.168.1.2/api/test") == "yaay!") {
             box.unlock();
             delay(4000);
             box.lock();
-        }
+        } */
+
+        card.authorize()
+            .onSuccess(grantAccess)
+            .onFailure(notifyForbiddenAccess);
     });
 }
 
