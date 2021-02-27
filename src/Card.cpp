@@ -26,3 +26,7 @@ String Card::uidToHexString(MFRC522::Uid uid) {
 bool Card::isUidValid() {
     return UID.isEmpty() == false;
 }
+
+String Card::toUid() const {
+    return UID;
+}
