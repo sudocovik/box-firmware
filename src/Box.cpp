@@ -11,8 +11,8 @@ void Box::configurePins() const {
     pinMode(_statePin, INPUT_PULLUP);
 }
 
-bool Box::isClosed() const {
-    return !digitalRead(_statePin);
+bool Box::isOpened() const {
+    return digitalRead(_statePin);
 }
 
 void Box::unlock() const {

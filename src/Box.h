@@ -14,7 +14,7 @@ class Box {
 
         void configurePins() const;
 
-        bool isClosed() const;
+        bool isOpened() const;
 
         void unlock() const;
 
