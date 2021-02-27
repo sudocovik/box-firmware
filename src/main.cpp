@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include <CardReader.h>
 #include <Box.h>
-#include <ESP8266HTTPClient.h>
-#include <WiFiClient.h>
 #include <NetworkManager.h>
 
 #define RST_PIN     D1
@@ -16,8 +14,6 @@
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
-
-String httpGETRequest(const char* url);
 
 void setup() {
     Serial.begin(9600);
@@ -58,40 +54,8 @@ void loop() {
 
         Serial.println("Box is closed, authorizing card with the server...");
 
-        /* if (httpGETRequest("http://192.168.1.2/api/test") == "yaay!") {
-            box.unlock();
-            delay(4000);
-            box.lock();
-        } */
-
         card.authorize()
             .onSuccess(grantAccess)
             .onFailure(notifyForbiddenAccess);
     });
-}
-
-String httpGETRequest(const char* url) {
-    WiFiClient client;
-    HTTPClient http;
-
-    http.begin(client, url);
-
-    // Send HTTP POST request
-    int httpResponseCode = http.GET();
-
-    String payload = "{}";
-
-    if (httpResponseCode>0) {
-        Serial.print("HTTP Response code: ");
-        Serial.println(httpResponseCode);
-        payload = http.getString();
-    }
-    else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-    }
-    // Free resources
-    http.end();
-
-    return payload;
 }

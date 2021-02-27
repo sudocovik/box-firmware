@@ -1,5 +1,7 @@
 #include <Card.h>
 #include <MFRC522.h>
+#include <ESP8266HTTPClient.h>
+#include <WiFiClient.h>
 
 Card::Card(MFRC522::Uid uid) {
     UID = uidToHexString(uid);
@@ -32,7 +34,22 @@ String Card::toUid() const {
 }
 
 Card::AuthorizationResult Card::authorize() {
-    return Card::AuthorizationResult(false);
+    WiFiClient client;
+    HTTPClient http;
+
+    http.begin(client, "http://192.168.1.2/api/test");
+
+    int responseCode = http.GET();
+
+    if (responseCode < 1) {
+        return Card::AuthorizationResult(false);
+    }
+
+    bool successful = http.getString() == "yaay!";
+
+    http.end();
+
+    return Card::AuthorizationResult(successful);
 }
 
 Card::AuthorizationResult::AuthorizationResult(bool isSuccessful) {
