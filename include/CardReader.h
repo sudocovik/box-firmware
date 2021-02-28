@@ -9,7 +9,7 @@ class CardReader {
         MFRC522 reader;
         unsigned long pauseTime;
 
-public:
+    public:
         CardReader(
                 byte chipSelectPin,
                 byte resetPowerDownPin
