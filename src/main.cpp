@@ -2,6 +2,7 @@
 #include <CardReader.h>
 #include <Box.h>
 #include <NetworkManager.h>
+#include <StatusLED.h>
 
 #define RST_PIN     D1
 #define SS_PIN      D2
@@ -17,20 +18,17 @@
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
+StatusLED LED = StatusLED(GREEN_PIN, RED_PIN);
 
 void setup() {
     Serial.begin(9600);
     while (!Serial);
 
     box.configurePins();
+    LED.configurePins();
+    LED.idle();
     reader.begin();
     reader.dump();
-
-
-    pinMode(RED_PIN, OUTPUT);
-    pinMode(GREEN_PIN, OUTPUT);
-    digitalWrite(RED_PIN, LOW);
-    analogWrite(GREEN_PIN, 10);
 
     NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
     manager.connect([]() {
@@ -80,6 +78,6 @@ void loop() {
 
 
         delay(2000);
-        analogWrite(GREEN_PIN, 10);
+        LED.idle();
     });
 }
