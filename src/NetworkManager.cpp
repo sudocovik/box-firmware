@@ -14,5 +14,3 @@ void NetworkManager::connect(void (*onSuccess)()) const {
         onSuccess();
     }
 }
-
-

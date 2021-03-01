@@ -7,6 +7,7 @@
 class CardReader {
     private:
         MFRC522 reader;
+
         unsigned long pauseTime;
 
     public:

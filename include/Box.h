@@ -4,6 +4,7 @@
 class Box {
     private:
         byte _lockPin;
+
         byte _statePin;
 
     public:
