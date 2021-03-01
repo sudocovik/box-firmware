@@ -2,13 +2,13 @@
 #define CARDREADER_H
 
 #include <MFRC522.h>
+#include <Card.h>
 
 class CardReader {
     private:
         MFRC522 reader;
-        unsigned long pauseTime;
 
-        static String uidToHexString(MFRC522::Uid uid);
+        unsigned long pauseTime;
 
     public:
         CardReader(
@@ -22,7 +22,7 @@ class CardReader {
 
         void pauseAfterSuccessfulRead(unsigned long milliseconds);
 
-        void onCardDetected(void (*callback)(String));
+        void onCardDetected(void (*callback)(Card));
 };
 
 #endif
