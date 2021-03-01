@@ -62,6 +62,7 @@ void loop() {
 
         if (box.isOpened()) {
             Serial.println("Box is opened, skipping...");
+            LED.flashRed(1);
             return;
         }
 
