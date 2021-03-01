@@ -28,6 +28,8 @@ class StatusLED {
         StatusLED idle() const;
 
         StatusLED flashGreen(unsigned short int times) const;
+
+        StatusLED flashRed(unsigned short int times) const;
 };
 
 #endif

@@ -52,3 +52,23 @@ StatusLED StatusLED::flashGreen(unsigned short int times) const {
 
     return *this;
 }
+
+StatusLED StatusLED::flashRed(unsigned short int times) const {
+    if (times == 0) return *this;
+
+    greenOff();
+
+    for (unsigned short int i = 0; i < times; i++) {
+        redOn();
+        delay(200);
+        redOff();
+
+        // Last iteration does not need delay
+        if (i == times - 1)
+            continue;
+
+        delay(200);
+    }
+
+    return *this;
+}
