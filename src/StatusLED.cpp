@@ -32,3 +32,23 @@ void StatusLED::redOn() const {
 void StatusLED::redOff() const {
     digitalWrite(_redPin, LOW);
 }
+
+StatusLED StatusLED::flashGreen(unsigned short int times) const {
+    if (times == 0) return *this;
+
+    redOff();
+
+    for (unsigned short int i = 0; i < times; i++) {
+        greenOn();
+        delay(200);
+        greenOff();
+
+        // Last iteration does not need delay
+        if (i == times - 1)
+            continue;
+
+        delay(200);
+    }
+
+    return *this;
+}

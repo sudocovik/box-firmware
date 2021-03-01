@@ -26,6 +26,8 @@ class StatusLED {
         void configurePins() const;
 
         StatusLED idle() const;
+
+        StatusLED flashGreen(unsigned short int times) const;
 };
 
 #endif
