@@ -48,6 +48,7 @@ void grantAccess() {
 
 void notifyForbiddenAccess() {
     Serial.println("Failed authorization!");
+    LED.flashRed(3);
 }
 
 void loop() {
