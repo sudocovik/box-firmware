@@ -39,6 +39,8 @@ void setup() {
 void grantAccess() {
     Serial.println("Successful authorization! Opening the box...");
 
+    LED.flashGreen(2);
+
     box.unlock();
     delay(4000);
     box.lock();
