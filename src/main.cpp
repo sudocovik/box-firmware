@@ -23,7 +23,7 @@ void setup() {
     reader.begin();
     reader.dump();
 
-    NetworkManager manager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
+    NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
     manager.connect([]() {
         Serial.println("Successfully connected to network!");
     });
