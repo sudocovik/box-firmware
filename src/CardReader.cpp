@@ -34,7 +34,7 @@ void CardReader::onCardDetected(void (*callback)(Card)) {
      *   we should try to read UID and convert it to human readable HEX string.
      *   Disengaging with the card is required because we read all the information needed.
      */
-    Card card(reader.uid);
+    Card card = Card(reader.uid);
 
     reader.PICC_HaltA();
 
@@ -43,4 +43,3 @@ void CardReader::onCardDetected(void (*callback)(Card)) {
         delay(pauseTime);
     }
 }
-
