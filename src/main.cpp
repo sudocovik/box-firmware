@@ -56,6 +56,10 @@ void loop() {
     reader.onCardDetected([](Card card) {
         Serial.println("Detected new card with UID: " + card.toUid());
 
+        LED.flashGreen(1);
+        delay(1000);
+        LED.idle();
+
         if (box.isOpened()) {
             Serial.println("Box is opened, skipping...");
             return;
