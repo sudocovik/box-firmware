@@ -65,19 +65,6 @@ void loop() {
             .onSuccess(grantAccess)
             .onFailure(notifyForbiddenAccess);
 
-        digitalWrite(RED_PIN, LOW);
-        analogWrite(GREEN_PIN, 550);
-
-        delay(200);
-
-        analogWrite(GREEN_PIN, 0);
-
-        delay(200);
-
-        analogWrite(GREEN_PIN, 550);
-
-
-        delay(2000);
         LED.idle();
     });
 }
