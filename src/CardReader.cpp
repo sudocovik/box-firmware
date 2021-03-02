@@ -8,26 +8,39 @@ CardReader::CardReader(byte chipSelectPin, byte resetPowerDownPin) {
     reader = MFRC522(chipSelectPin, resetPowerDownPin);
 }
 
-void CardReader::dump() {
-    reader.PCD_DumpVersionToSerial();
-}
-
 void CardReader::begin() {
     SPI.begin();
     reader.PCD_Init();
     delay(4);
 }
 
-void CardReader::pauseAfterSuccessfulRead(unsigned long milliseconds) {
-    pauseTime = milliseconds;
+CardReader CardReader::onSuccessfulAttempt(void (*callback)(Card)) {
+    successfulAttemptCallback = callback;
+
+    return *this;
 }
 
-void CardReader::onCardDetected(void (*callback)(Card)) {
+CardReader CardReader::onFailedAttempt(void (*callback)()) {
+    failedAttemptCallback = callback;
+
+    return *this;
+}
+
+CardReader CardReader::onAnyAttempt(void (*callback)()) {
+    anyAttemptCallback = callback;
+
+    return *this;
+}
+
+void CardReader::tryReadingTheCard() {
     if (reader.PICC_IsNewCardPresent() == false)
         return;
 
-    if (reader.PICC_ReadCardSerial() == false)
+    if (reader.PICC_ReadCardSerial() == false) {
+        failedAttemptCallback();
+        anyAttemptCallback();
         return;
+    }
 
     /*
      *   If we got here it means the card is present and
@@ -39,7 +52,11 @@ void CardReader::onCardDetected(void (*callback)(Card)) {
     reader.PICC_HaltA();
 
     if (card.isUidValid()) {
-        callback(card);
-        delay(pauseTime);
+        successfulAttemptCallback(card);
     }
+    else {
+        failedAttemptCallback();
+    }
+
+    anyAttemptCallback();
 }

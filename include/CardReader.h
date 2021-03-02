@@ -8,7 +8,11 @@ class CardReader {
     private:
         MFRC522 reader;
 
-        unsigned long pauseTime;
+        void (*successfulAttemptCallback)(Card);
+
+        void (*failedAttemptCallback)();
+
+        void (*anyAttemptCallback)();
 
     public:
         CardReader(
@@ -18,11 +22,13 @@ class CardReader {
 
         void begin();
 
-        void dump();
+        CardReader onSuccessfulAttempt(void (*callback)(Card));
 
-        void pauseAfterSuccessfulRead(unsigned long milliseconds);
+        CardReader onFailedAttempt(void (*callback)());
 
-        void onCardDetected(void (*callback)(Card));
+        CardReader onAnyAttempt(void (*callback)());
+
+        void tryReadingTheCard();
 };
 
 #endif
