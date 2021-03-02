@@ -35,6 +35,28 @@ void notifyForbiddenAccess() {
     LED.flashRed(3);
 }
 
+void tryToAuthorizeAccess(Card card) {
+    Serial.println("Detected new card with UID: " + card.toUid());
+
+    LED.flashGreen(1);
+    delay(1000);
+    LED.idle();
+
+    if (box.isOpened()) {
+        Serial.println("Box is opened, skipping...");
+        LED.flashRed(1);
+        return;
+    }
+
+    Serial.println("Box is closed, authorizing card with the server...");
+
+    card.authorize()
+        .onSuccess(grantAccess)
+        .onFailure(notifyForbiddenAccess);
+
+    LED.idle();
+}
+
 void setup() {
     Serial.begin(9600);
     while (!Serial);
@@ -51,27 +73,7 @@ void setup() {
     });
 
     reader.pauseAfterSuccessfulRead(2000);
-    reader.onSuccessfulAttempt([](Card card) {
-        Serial.println("Detected new card with UID: " + card.toUid());
-
-        LED.flashGreen(1);
-        delay(1000);
-        LED.idle();
-
-        if (box.isOpened()) {
-            Serial.println("Box is opened, skipping...");
-            LED.flashRed(1);
-            return;
-        }
-
-        Serial.println("Box is closed, authorizing card with the server...");
-
-        card.authorize()
-                .onSuccess(grantAccess)
-                .onFailure(notifyForbiddenAccess);
-
-        LED.idle();
-    });
+    reader.onSuccessfulAttempt(tryToAuthorizeAccess);
 }
 
 void loop() {
