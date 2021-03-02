@@ -12,6 +12,8 @@ class CardReader {
 
         void (*successfulAttemptCallback)(Card);
 
+        void (*failedAttemptCallback)();
+
     public:
         CardReader(
                 byte chipSelectPin,
@@ -25,6 +27,8 @@ class CardReader {
         void pauseAfterSuccessfulRead(unsigned long milliseconds);
 
         void onSuccessfulAttempt(void (*callback)(Card));
+
+        void onFailedAttempt(void (*callback)());
 
         void tryReadingTheCard();
 };
