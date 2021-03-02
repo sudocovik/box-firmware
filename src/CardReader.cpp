@@ -14,10 +14,6 @@ void CardReader::begin() {
     delay(4);
 }
 
-void CardReader::pauseAfterSuccessfulRead(unsigned long milliseconds) {
-    pauseTime = milliseconds;
-}
-
 void CardReader::onSuccessfulAttempt(void (*callback)(Card)) {
     successfulAttemptCallback = callback;
 }
@@ -51,7 +47,6 @@ void CardReader::tryReadingTheCard() {
 
     if (card.isUidValid()) {
         successfulAttemptCallback(card);
-        delay(pauseTime);
     }
     else {
         failedAttemptCallback();
