@@ -34,8 +34,10 @@ void CardReader::tryReadingTheCard() {
     if (reader.PICC_IsNewCardPresent() == false)
         return;
 
-    if (reader.PICC_ReadCardSerial() == false)
+    if (reader.PICC_ReadCardSerial() == false) {
+        failedAttemptCallback();
         return;
+    }
 
     /*
      *   If we got here it means the card is present and
@@ -49,5 +51,8 @@ void CardReader::tryReadingTheCard() {
     if (card.isUidValid()) {
         successfulAttemptCallback(card);
         delay(pauseTime);
+    }
+    else {
+        failedAttemptCallback();
     }
 }
