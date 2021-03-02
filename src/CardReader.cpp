@@ -14,16 +14,22 @@ void CardReader::begin() {
     delay(4);
 }
 
-void CardReader::onSuccessfulAttempt(void (*callback)(Card)) {
+CardReader CardReader::onSuccessfulAttempt(void (*callback)(Card)) {
     successfulAttemptCallback = callback;
+
+    return *this;
 }
 
-void CardReader::onFailedAttempt(void (*callback)()) {
+CardReader CardReader::onFailedAttempt(void (*callback)()) {
     failedAttemptCallback = callback;
+
+    return *this;
 }
 
-void CardReader::onAnyAttempt(void (*callback)()) {
+CardReader CardReader::onAnyAttempt(void (*callback)()) {
     anyAttemptCallback = callback;
+
+    return *this;
 }
 
 void CardReader::tryReadingTheCard() {

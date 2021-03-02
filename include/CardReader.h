@@ -22,11 +22,11 @@ class CardReader {
 
         void begin();
 
-        void onSuccessfulAttempt(void (*callback)(Card));
+        CardReader onSuccessfulAttempt(void (*callback)(Card));
 
-        void onFailedAttempt(void (*callback)());
+        CardReader onFailedAttempt(void (*callback)());
 
-        void onAnyAttempt(void (*callback)());
+        CardReader onAnyAttempt(void (*callback)());
 
         void tryReadingTheCard();
 };

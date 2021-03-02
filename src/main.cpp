@@ -78,9 +78,9 @@ void setup() {
         Serial.println("Successfully connected to network!");
     });
 
-    reader.onSuccessfulAttempt(tryToAuthorizeAccess);
-    reader.onFailedAttempt(indicateCardReadingFailure);
-    reader.onAnyAttempt(resetLED);
+    reader.onSuccessfulAttempt(tryToAuthorizeAccess)
+          .onFailedAttempt(indicateCardReadingFailure)
+          .onAnyAttempt(resetLED);
 }
 
 void loop() {
