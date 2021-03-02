@@ -20,22 +20,6 @@ CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
 StatusLED LED = StatusLED(GREEN_PIN, RED_PIN);
 
-void setup() {
-    Serial.begin(9600);
-    while (!Serial);
-
-    box.configurePins();
-    LED.configurePins();
-    LED.idle();
-    reader.begin();
-    reader.dump();
-
-    NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
-    manager.connect([]() {
-        Serial.println("Successfully connected to network!");
-    });
-}
-
 void grantAccess() {
     Serial.println("Successful authorization! Opening the box...");
 
@@ -51,10 +35,23 @@ void notifyForbiddenAccess() {
     LED.flashRed(3);
 }
 
-void loop() {
-    reader.pauseAfterSuccessfulRead(2000);
+void setup() {
+    Serial.begin(9600);
+    while (!Serial);
 
-    reader.onCardDetected([](Card card) {
+    box.configurePins();
+    LED.configurePins();
+    LED.idle();
+    reader.begin();
+    reader.dump();
+
+    NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
+    manager.connect([]() {
+        Serial.println("Successfully connected to network!");
+    });
+
+    reader.pauseAfterSuccessfulRead(2000);
+    reader.onSuccessfulAttempt([](Card card) {
         Serial.println("Detected new card with UID: " + card.toUid());
 
         LED.flashGreen(1);
@@ -70,9 +67,13 @@ void loop() {
         Serial.println("Box is closed, authorizing card with the server...");
 
         card.authorize()
-            .onSuccess(grantAccess)
-            .onFailure(notifyForbiddenAccess);
+                .onSuccess(grantAccess)
+                .onFailure(notifyForbiddenAccess);
 
         LED.idle();
     });
+}
+
+void loop() {
+    reader.tryReadingTheCard();
 }

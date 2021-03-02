@@ -10,6 +10,8 @@ class CardReader {
 
         unsigned long pauseTime;
 
+        void (*successfulAttemptCallback)(Card);
+
     public:
         CardReader(
                 byte chipSelectPin,
@@ -22,7 +24,9 @@ class CardReader {
 
         void pauseAfterSuccessfulRead(unsigned long milliseconds);
 
-        void onCardDetected(void (*callback)(Card));
+        void onSuccessfulAttempt(void (*callback)(Card));
+
+        void tryReadingTheCard();
 };
 
 #endif

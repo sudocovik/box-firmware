@@ -22,7 +22,11 @@ void CardReader::pauseAfterSuccessfulRead(unsigned long milliseconds) {
     pauseTime = milliseconds;
 }
 
-void CardReader::onCardDetected(void (*callback)(Card)) {
+void CardReader::onSuccessfulAttempt(void (*callback)(Card)) {
+    successfulAttemptCallback = callback;
+}
+
+void CardReader::tryReadingTheCard() {
     if (reader.PICC_IsNewCardPresent() == false)
         return;
 
@@ -39,7 +43,7 @@ void CardReader::onCardDetected(void (*callback)(Card)) {
     reader.PICC_HaltA();
 
     if (card.isUidValid()) {
-        callback(card);
+        successfulAttemptCallback(card);
         delay(pauseTime);
     }
 }
