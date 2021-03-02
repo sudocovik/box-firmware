@@ -85,4 +85,5 @@ void setup() {
 
 void loop() {
     reader.tryReadingTheCard();
+    delay(1000);
 }
