@@ -69,18 +69,19 @@ void setup() {
     while (!Serial);
 
     box.configurePins();
+
     LED.configurePins();
     LED.idle();
+
     reader.begin();
+    reader.onSuccessfulAttempt(tryToAuthorizeAccess);
+    reader.onFailedAttempt(indicateCardReadingFailure);
+    reader.onAnyAttempt(resetLED);
 
     NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
     manager.connect([]() {
         Serial.println("Successfully connected to network!");
     });
-
-    reader.onSuccessfulAttempt(tryToAuthorizeAccess)
-          .onFailedAttempt(indicateCardReadingFailure)
-          .onAnyAttempt(resetLED);
 }
 
 void loop() {
