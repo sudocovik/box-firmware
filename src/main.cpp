@@ -57,6 +57,11 @@ void tryToAuthorizeAccess(Card card) {
     LED.idle();
 }
 
+void indicateCardReadingFailure() {
+    Serial.println("Card present on the reader but failed to read the UID.");
+    LED.flashRed(2);
+}
+
 void setup() {
     Serial.begin(9600);
     while (!Serial);
@@ -74,6 +79,7 @@ void setup() {
 
     reader.pauseAfterSuccessfulRead(2000);
     reader.onSuccessfulAttempt(tryToAuthorizeAccess);
+    reader.onFailedAttempt(indicateCardReadingFailure);
 }
 
 void loop() {
