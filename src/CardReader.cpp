@@ -30,12 +30,17 @@ void CardReader::onFailedAttempt(void (*callback)()) {
     failedAttemptCallback = callback;
 }
 
+void CardReader::onAnyAttempt(void (*callback)()) {
+    anyAttemptCallback = callback;
+}
+
 void CardReader::tryReadingTheCard() {
     if (reader.PICC_IsNewCardPresent() == false)
         return;
 
     if (reader.PICC_ReadCardSerial() == false) {
         failedAttemptCallback();
+        anyAttemptCallback();
         return;
     }
 
@@ -55,4 +60,6 @@ void CardReader::tryReadingTheCard() {
     else {
         failedAttemptCallback();
     }
+
+    anyAttemptCallback();
 }
