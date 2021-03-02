@@ -8,10 +8,6 @@ CardReader::CardReader(byte chipSelectPin, byte resetPowerDownPin) {
     reader = MFRC522(chipSelectPin, resetPowerDownPin);
 }
 
-void CardReader::dump() {
-    reader.PCD_DumpVersionToSerial();
-}
-
 void CardReader::begin() {
     SPI.begin();
     reader.PCD_Init();

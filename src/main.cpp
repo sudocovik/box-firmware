@@ -72,7 +72,6 @@ void setup() {
     LED.configurePins();
     LED.idle();
     reader.begin();
-    reader.dump();
 
     NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
     manager.connect([]() {

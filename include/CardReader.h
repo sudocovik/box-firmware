@@ -24,8 +24,6 @@ class CardReader {
 
         void begin();
 
-        void dump();
-
         void pauseAfterSuccessfulRead(unsigned long milliseconds);
 
         void onSuccessfulAttempt(void (*callback)(Card));
