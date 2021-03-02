@@ -2,9 +2,13 @@
 #include <CardReader.h>
 #include <Box.h>
 #include <NetworkManager.h>
+#include <StatusLED.h>
 
 #define RST_PIN     D1
 #define SS_PIN      D2
+
+#define GREEN_PIN   D3
+#define RED_PIN     D0
 
 #define STATE_PIN   D4
 #define LOCK_PIN    D8
@@ -14,12 +18,15 @@
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
+StatusLED LED = StatusLED(GREEN_PIN, RED_PIN);
 
 void setup() {
     Serial.begin(9600);
     while (!Serial);
 
     box.configurePins();
+    LED.configurePins();
+    LED.idle();
     reader.begin();
     reader.dump();
 
@@ -32,6 +39,8 @@ void setup() {
 void grantAccess() {
     Serial.println("Successful authorization! Opening the box...");
 
+    LED.flashGreen(2);
+
     box.unlock();
     delay(4000);
     box.lock();
@@ -39,6 +48,7 @@ void grantAccess() {
 
 void notifyForbiddenAccess() {
     Serial.println("Failed authorization!");
+    LED.flashRed(3);
 }
 
 void loop() {
@@ -47,8 +57,13 @@ void loop() {
     reader.onCardDetected([](Card card) {
         Serial.println("Detected new card with UID: " + card.toUid());
 
+        LED.flashGreen(1);
+        delay(1000);
+        LED.idle();
+
         if (box.isOpened()) {
             Serial.println("Box is opened, skipping...");
+            LED.flashRed(1);
             return;
         }
 
@@ -57,5 +72,7 @@ void loop() {
         card.authorize()
             .onSuccess(grantAccess)
             .onFailure(notifyForbiddenAccess);
+
+        LED.idle();
     });
 }
