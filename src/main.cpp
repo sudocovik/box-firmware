@@ -65,8 +65,7 @@ void resetLED() {
 }
 
 void setup() {
-    Serial.begin(9600);
-    while (!Serial);
+    Serial.begin(115200);
 
     box.configurePins();
 
