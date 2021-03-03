@@ -36,6 +36,7 @@ void notifyForbiddenAccess() {
 }
 
 void tryToAuthorizeAccess(Card card) {
+    Serial.println("--------------------------------------------------");
     Serial.println("Detected new card with UID: " + card.toUid());
 
     LED.flashGreen(1);
