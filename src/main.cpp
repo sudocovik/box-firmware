@@ -74,9 +74,9 @@ void setup() {
     LED.idle();
 
     reader.begin();
-    reader.onSuccessfulAttempt(tryToAuthorizeAccess);
-    reader.onFailedAttempt(indicateCardReadingFailure);
-    reader.onAnyAttempt(resetLED);
+    reader.onSuccessfulAttempt(tryToAuthorizeAccess)
+          .onFailedAttempt(indicateCardReadingFailure)
+          .onAnyAttempt(resetLED);
 
     NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
     manager.connect([]() {

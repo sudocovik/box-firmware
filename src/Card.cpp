@@ -59,7 +59,7 @@ Card::AuthorizationResult::AuthorizationResult(bool isSuccessful) {
     successful = isSuccessful;
 }
 
-Card::AuthorizationResult Card::AuthorizationResult::onSuccess(void (*callback)()) {
+Card::AuthorizationResult& Card::AuthorizationResult::onSuccess(void (*callback)()) {
     if (successful) {
         callback();
     }
@@ -67,7 +67,7 @@ Card::AuthorizationResult Card::AuthorizationResult::onSuccess(void (*callback)(
     return *this;
 }
 
-Card::AuthorizationResult Card::AuthorizationResult::onFailure(void (*callback)()) {
+Card::AuthorizationResult& Card::AuthorizationResult::onFailure(void (*callback)()) {
     if (!successful) {
         callback();
     }

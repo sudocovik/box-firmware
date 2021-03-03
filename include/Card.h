@@ -28,9 +28,9 @@ class Card::AuthorizationResult {
     public:
         explicit AuthorizationResult(bool isSuccessful);
 
-        Card::AuthorizationResult onSuccess(void (*callback)());
+        Card::AuthorizationResult& onSuccess(void (*callback)());
 
-        Card::AuthorizationResult onFailure(void (*callback)());
+        Card::AuthorizationResult& onFailure(void (*callback)());
 };
 
 #endif
