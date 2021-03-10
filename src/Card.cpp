@@ -63,6 +63,14 @@ Card::AuthorizationResult Card::authorize() const {
     return Card::AuthorizationResult(successful);
 }
 
+Card::AuthorizationResult Card::authorizationSuccessful() {
+    return Card::AuthorizationResult(true);
+}
+
+Card::AuthorizationResult Card::authorizationFailed() {
+    return Card::AuthorizationResult(true);
+}
+
 Card::AuthorizationResult::AuthorizationResult(bool isSuccessful) {
     successful = isSuccessful;
 }

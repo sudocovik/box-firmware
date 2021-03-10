@@ -11,6 +11,10 @@ class Card {
 
         static String uidToHexString(MFRC522::Uid uid);
 
+        Card::AuthorizationResult authorizationSuccessful();
+
+        Card::AuthorizationResult authorizationFailed();
+
     public:
         explicit Card(MFRC522::Uid uid);
 
