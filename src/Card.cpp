@@ -44,11 +44,9 @@ Card::AuthorizationResult Card::authorize() const {
 
     int responseCode = http.POST("uid=" + toUid());
 
-    if (responseCode < 1) {
-        return Card::AuthorizationResult(false);
-    }
-
-    bool successful = http.getString() == "yaay!";
+    bool successful = responseCode > 0
+                    ? http.getString() == "yaay!"
+                    : false;
 
     http.end();
 
