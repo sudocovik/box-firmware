@@ -50,6 +50,16 @@ Card::AuthorizationResult Card::authorize() const {
 
     http.end();
 
+    /*
+     * return POST.request()
+     *            .to("http://192.168.1.2/api/authorize-card")
+     *            .withHeader("Content-Type", "application/x-www-form-urlencoded")
+     *            .andPayload("uid=" + toUid())
+     *            .responseShouldBe("yaay")
+     *                  ? authorizationSuccessful()
+     *                  : authorizationFailed()
+     */
+
     return Card::AuthorizationResult(successful);
 }
 
