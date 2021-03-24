@@ -13,7 +13,7 @@ class Card {
 
         static Card::AuthorizationResult authorizationSucceeded();
 
-        Card::AuthorizationResult authorizationFailed();
+        static Card::AuthorizationResult authorizationFailed();
 
     public:
         explicit Card(MFRC522::Uid uid);
