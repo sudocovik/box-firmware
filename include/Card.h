@@ -11,7 +11,7 @@ class Card {
 
         static String uidToHexString(MFRC522::Uid uid);
 
-        Card::AuthorizationResult authorizationSuccessful();
+        static Card::AuthorizationResult authorizationSucceeded();
 
         Card::AuthorizationResult authorizationFailed();
 
