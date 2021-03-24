@@ -68,8 +68,9 @@ Card::AuthorizationResult Card::authorizationSucceeded() {
 }
 
 Card::AuthorizationResult Card::authorizationFailed() {
-    return Card::AuthorizationResult(true);
+    return Card::AuthorizationResult(false);
 }
+
 
 Card::AuthorizationResult::AuthorizationResult(bool isSuccessful) {
     successful = isSuccessful;
