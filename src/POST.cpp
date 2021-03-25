@@ -1,17 +1,19 @@
 #include <POST.h>
+#include <Arduino.h>
+#include <utility>
 
 POST POST::request() {
     return {};
 }
 
-POST& POST::to(const char *url) {
-    _url = url;
+POST& POST::to(String url) {
+    _url = std::move(url);
 
     return *this;
 }
 
-POST& POST::withPayload(const char *payload) {
-    _payload = payload;
+POST& POST::withPayload(String payload) {
+    _payload = std::move(payload);
 
     return *this;
 }
