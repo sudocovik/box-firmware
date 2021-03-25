@@ -1,7 +1,6 @@
 #include <Card.h>
 #include <MFRC522.h>
-#include <ESP8266HTTPClient.h>
-#include <WiFiClient.h>
+#include <POST.h>
 
 Card::Card(MFRC522::Uid uid) {
     UID = uidToHexString(uid);
@@ -35,32 +34,12 @@ String Card::toUid() const {
 }
 
 Card::AuthorizationResult Card::authorize() const {
-    WiFiClient client;
-    HTTPClient http;
-
-    http.begin(client, "http://192.168.1.2/api/authorize-card");
-
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    int responseCode = http.POST("uid=" + toUid());
-
-    bool successful = responseCode > 0
-                    ? http.getString() == "yaay!"
-                    : false;
-
-    http.end();
-
-    /*
-     * return POST.request()
-     *            .to("http://192.168.1.2/api/authorize-card")
-     *            .withHeader("Content-Type", "application/x-www-form-urlencoded")
-     *            .andPayload("uid=" + toUid())
-     *            .responseShouldBe("yaay")
-     *                  ? authorizationSuccessful()
-     *                  : authorizationFailed()
-     */
-
-    return Card::AuthorizationResult(successful);
+    return POST::request()
+                .to("http://192.168.1.2/api/authorize-card")
+                .withPayload("uid=" + toUid())
+                .response() == "yaay!"
+                            ?  authorizationSucceeded()
+                            :  authorizationFailed();
 }
 
 Card::AuthorizationResult Card::authorizationSucceeded() {
