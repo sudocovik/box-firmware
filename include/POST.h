@@ -7,8 +7,6 @@
 
 class POST {
     private:
-        String _url;
-
         String _payload;
 
         WiFiClient _wifiClient;
@@ -20,7 +18,7 @@ class POST {
 
         static POST request();
 
-        POST& to(String url);
+        POST& to(const String& url);
 
         POST& withPayload(String payload);
 

@@ -9,8 +9,9 @@ POST POST::request() {
     return {};
 }
 
-POST& POST::to(String url) {
-    _url = std::move(url);
+POST& POST::to(const String& url) {
+    _httpClient.begin(_wifiClient, url);
+    _httpClient.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     return *this;
 }
@@ -22,9 +23,6 @@ POST& POST::withPayload(String payload) {
 }
 
 String POST::response() {
-    _httpClient.begin(_wifiClient, _url);
-    _httpClient.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
     int responseCode = _httpClient.POST(_payload);
 
     String response = responseCode == 200
