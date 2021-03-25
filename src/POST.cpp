@@ -1,6 +1,5 @@
 #include <POST.h>
 #include <Arduino.h>
-#include <utility>
 
 POST::POST(): _wifiClient(), _httpClient() {
 }
@@ -20,8 +19,8 @@ POST& POST::to(const String& url) {
     return *this;
 }
 
-POST& POST::withPayload(String payload) {
-    _payload = std::move(payload);
+POST& POST::withPayload(const String& payload) {
+    _payload = payload;
 
     return *this;
 }

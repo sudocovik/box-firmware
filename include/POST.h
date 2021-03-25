@@ -21,7 +21,7 @@ class POST {
 
         POST& to(const String& url);
 
-        POST& withPayload(String payload);
+        POST& withPayload(const String& payload);
 
         String response();
 };
