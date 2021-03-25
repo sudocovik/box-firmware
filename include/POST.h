@@ -2,6 +2,8 @@
 #define POST_H
 
 #include <Arduino.h>
+#include <WiFiClient.h>
+#include <ESP8266HTTPClient.h>
 
 class POST {
     private:
@@ -9,7 +11,13 @@ class POST {
 
         String _payload;
 
+        WiFiClient _wifiClient;
+
+        HTTPClient _httpClient;
+
     public:
+        POST();
+
         static POST request();
 
         POST& to(String url);

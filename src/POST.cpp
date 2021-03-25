@@ -1,8 +1,9 @@
 #include <POST.h>
 #include <Arduino.h>
 #include <utility>
-#include <WiFiClient.h>
-#include <ESP8266HTTPClient.h>
+
+POST::POST(): _wifiClient(), _httpClient() {
+}
 
 POST POST::request() {
     return {};
@@ -21,21 +22,16 @@ POST& POST::withPayload(String payload) {
 }
 
 String POST::response() {
-    WiFiClient client;
-    HTTPClient http;
+    _httpClient.begin(_wifiClient, _url);
+    _httpClient.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    http.begin(client, _url);
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    int responseCode = http.POST(_payload);
+    int responseCode = _httpClient.POST(_payload);
 
     String response = responseCode == 200
-                                    ? http.getString()
+                                    ? _httpClient.getString()
                                     : "";
 
-    http.end();
+    _httpClient.end();
 
     return response;
 }
-
-
