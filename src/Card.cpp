@@ -37,9 +37,9 @@ Card::AuthorizationResult Card::authorize() const {
     return POST::request()
                 .to("http://192.168.1.2/api/authorize-card")
                 .withPayload("uid=" + toUid())
-                .response() == "yaay!"
-                            ?  authorizationSucceeded()
-                            :  authorizationFailed();
+                .response().equals("yaay!")
+                            ? authorizationSucceeded()
+                            : authorizationFailed();
 }
 
 Card::AuthorizationResult Card::authorizationSucceeded() {
