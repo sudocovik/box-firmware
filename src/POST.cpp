@@ -9,3 +9,9 @@ POST& POST::to(const char *url) {
 
     return *this;
 }
+
+POST& POST::withPayload(const char *payload) {
+    _payload = payload;
+
+    return *this;
+}
