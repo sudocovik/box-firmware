@@ -16,7 +16,7 @@ class POST {
 
         POST& withPayload(String payload);
 
-        POST& withPayload(const char* payload);
+        String response();
 };
 
 #endif
