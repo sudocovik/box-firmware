@@ -15,6 +15,7 @@ class POST {
 
     public:
         POST();
+        ~POST();
 
         static POST request();
 

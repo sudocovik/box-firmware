@@ -5,6 +5,10 @@
 POST::POST(): _wifiClient(), _httpClient() {
 }
 
+POST::~POST() {
+    _httpClient.end();
+}
+
 POST POST::request() {
     return {};
 }
@@ -28,8 +32,6 @@ String POST::response() {
     String response = responseCode == 200
                                     ? _httpClient.getString()
                                     : "";
-
-    _httpClient.end();
 
     return response;
 }
