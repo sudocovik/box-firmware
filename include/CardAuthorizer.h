@@ -4,12 +4,16 @@
 #include <Arduino.h>
 
 class CardAuthorizer {
+    public: class Result;
+
     private:
         String _uid;
 
-    public:
-        class Result;
+        static CardAuthorizer::Result authorizationSucceeded();
 
+        static CardAuthorizer::Result authorizationFailed();
+
+    public:
         CardAuthorizer& giveUid(const String& uid);
 
         CardAuthorizer::Result authorize();

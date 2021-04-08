@@ -1,4 +1,5 @@
 #include <CardAuthorizer.h>
+#include <POST.h>
 
 CardAuthorizer &CardAuthorizer::giveUid(const String& uid) {
     _uid = uid;
@@ -6,11 +7,23 @@ CardAuthorizer &CardAuthorizer::giveUid(const String& uid) {
     return *this;
 }
 
-CardAuthorizer::Result CardAuthorizer::authorize() {
-    Serial.println("Auth uid:" + _uid);
+CardAuthorizer::Result CardAuthorizer::authorizationSucceeded() {
+    return CardAuthorizer::Result(true);
+}
 
+CardAuthorizer::Result CardAuthorizer::authorizationFailed() {
     return CardAuthorizer::Result(false);
 }
+
+CardAuthorizer::Result CardAuthorizer::authorize() {
+    return POST::request()
+                 .to("http://192.168.1.2/api/authorize-card")
+                 .withPayload("uid=" + _uid)
+                 .response().equals("yaay!")
+                            ? authorizationSucceeded()
+                            : authorizationFailed();
+}
+
 
 CardAuthorizer::Result::Result(bool isSuccessful) {
     successful = isSuccessful;
