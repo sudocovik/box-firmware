@@ -2,18 +2,17 @@
 #define CARD_H
 
 #include <MFRC522.h>
+#include <CardAuthorizer.h>
 
 class Card {
     private:
         String UID = "";
 
-        class AuthorizationResult;
-
         static String uidToHexString(MFRC522::Uid uid);
 
-        static Card::AuthorizationResult authorizationSucceeded();
+        /*static Card::AuthorizationResult authorizationSucceeded();
 
-        static Card::AuthorizationResult authorizationFailed();
+        static Card::AuthorizationResult authorizationFailed();*/
 
     public:
         explicit Card(MFRC522::Uid uid);
@@ -22,19 +21,7 @@ class Card {
 
         String toUid() const;
 
-        Card::AuthorizationResult authorize() const;
-};
-
-class Card::AuthorizationResult {
-    private:
-        bool successful;
-
-    public:
-        explicit AuthorizationResult(bool isSuccessful);
-
-        Card::AuthorizationResult& onSuccess(void (*callback)());
-
-        Card::AuthorizationResult& onFailure(void (*callback)());
+        CardAuthorizer::Result authorize() const;
 };
 
 #endif

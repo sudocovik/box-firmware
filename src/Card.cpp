@@ -1,6 +1,6 @@
 #include <Card.h>
 #include <MFRC522.h>
-#include <POST.h>
+#include <CardAuthorizer.h>
 
 Card::Card(MFRC522::Uid uid) {
     UID = uidToHexString(uid);
@@ -33,6 +33,7 @@ String Card::toUid() const {
     return UID;
 }
 
+/*
 Card::AuthorizationResult Card::authorize() const {
     return POST::request()
                 .to("http://192.168.1.2/api/authorize-card")
@@ -49,24 +50,10 @@ Card::AuthorizationResult Card::authorizationSucceeded() {
 Card::AuthorizationResult Card::authorizationFailed() {
     return Card::AuthorizationResult(false);
 }
+ */
 
-
-Card::AuthorizationResult::AuthorizationResult(bool isSuccessful) {
-    successful = isSuccessful;
+CardAuthorizer::Result Card::authorize() const {
+    return CardAuthorizer()
+            .authorize();
 }
 
-Card::AuthorizationResult& Card::AuthorizationResult::onSuccess(void (*callback)()) {
-    if (successful) {
-        callback();
-    }
-
-    return *this;
-}
-
-Card::AuthorizationResult& Card::AuthorizationResult::onFailure(void (*callback)()) {
-    if (!successful) {
-        callback();
-    }
-
-    return *this;
-}
