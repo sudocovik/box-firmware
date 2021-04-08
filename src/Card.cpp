@@ -33,25 +33,6 @@ String Card::toUid() const {
     return UID;
 }
 
-/*
-Card::AuthorizationResult Card::authorize() const {
-    return POST::request()
-                .to("http://192.168.1.2/api/authorize-card")
-                .withPayload("uid=" + toUid())
-                .response().equals("yaay!")
-                            ? authorizationSucceeded()
-                            : authorizationFailed();
-}
-
-Card::AuthorizationResult Card::authorizationSucceeded() {
-    return Card::AuthorizationResult(true);
-}
-
-Card::AuthorizationResult Card::authorizationFailed() {
-    return Card::AuthorizationResult(false);
-}
- */
-
 CardAuthorizer::Result Card::authorize() const {
     return CardAuthorizer()
             .giveUid(toUid())
