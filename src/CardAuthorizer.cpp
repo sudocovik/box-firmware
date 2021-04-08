@@ -1,6 +1,14 @@
 #include <CardAuthorizer.h>
 
+CardAuthorizer &CardAuthorizer::giveUid(const String& uid) {
+    _uid = uid;
+
+    return *this;
+}
+
 CardAuthorizer::Result CardAuthorizer::authorize() {
+    Serial.println("Auth uid:" + _uid);
+
     return CardAuthorizer::Result(false);
 }
 

@@ -54,6 +54,7 @@ Card::AuthorizationResult Card::authorizationFailed() {
 
 CardAuthorizer::Result Card::authorize() const {
     return CardAuthorizer()
+            .giveUid(toUid())
             .authorize();
 }
 
