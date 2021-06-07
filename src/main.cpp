@@ -52,9 +52,9 @@ void tryToAuthorizeAccess(Card card) {
 
     Serial.println("Box is closed, authorizing card with the server...");
 
-    card.authorize()
-        .onSuccess(grantAccess)
-        .onFailure(notifyForbiddenAccess);
+    box.authorize(card)
+       .onSuccess(grantAccess)
+       .onFailure(notifyForbiddenAccess);
 }
 
 void indicateCardReadingFailure() {
