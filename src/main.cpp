@@ -17,7 +17,8 @@
 #define ACCESS_POINT_PASSWORD   "password"
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
-Box box = Box(LOCK_PIN, STATE_PIN);
+BoxAuthorizer authorizer = BoxAuthorizer();
+Box box = Box(LOCK_PIN, STATE_PIN, authorizer);
 StatusLED LED = StatusLED(GREEN_PIN, RED_PIN);
 
 void grantAccess() {

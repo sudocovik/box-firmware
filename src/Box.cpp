@@ -1,9 +1,10 @@
 #include <Arduino.h>
 #include <Box.h>
 
-Box::Box(byte lockPin, byte statePin) {
+Box::Box(byte lockPin, byte statePin, BoxAuthorizer& authorizer) {
     _lockPin = lockPin;
     _statePin = statePin;
+    _authorizer = authorizer;
 }
 
 void Box::configurePins() const {
