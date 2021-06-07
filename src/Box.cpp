@@ -23,3 +23,8 @@ void Box::unlock() const {
 void Box::lock() const {
     digitalWrite(_lockPin, LOW);
 }
+
+BoxAuthorizer::Result Box::authorize(const Card &card) {
+    return _authorizer.giveUid(card.toUid())
+               .authorize();
+}

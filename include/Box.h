@@ -2,6 +2,7 @@
 #define BOX_H
 
 #include <BoxAuthorizer.h>
+#include <Card.h>
 
 class Box {
     private:
@@ -25,6 +26,8 @@ class Box {
         void unlock() const;
 
         void lock() const;
+
+        BoxAuthorizer::Result authorize(const Card& card);
 };
 
 #endif
