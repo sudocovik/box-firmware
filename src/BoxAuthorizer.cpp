@@ -20,8 +20,8 @@ BoxAuthorizer::Result BoxAuthorizer::authorize() {
                  .to("http://192.168.1.2/api/box/authorize")
                  .withPayload("uid=" + _uid)
                  .responseCode() == 200
-                            ? authorizationSucceeded()
-                            : authorizationFailed();
+                                  ? authorizationSucceeded()
+                                  : authorizationFailed();
 }
 
 
