@@ -8,7 +8,7 @@ class CardReader {
     private:
         MFRC522 reader;
 
-        void (*successfulAttemptCallback)(Card);
+        void (*successfulAttemptCallback)(const Card&);
 
         void (*failedAttemptCallback)();
 
@@ -22,7 +22,7 @@ class CardReader {
 
         void begin();
 
-        CardReader& onSuccessfulAttempt(void (*callback)(Card));
+        CardReader& onSuccessfulAttempt(void (*callback)(const Card&));
 
         CardReader& onFailedAttempt(void (*callback)());
 

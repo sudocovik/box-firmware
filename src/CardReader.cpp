@@ -14,7 +14,7 @@ void CardReader::begin() {
     delay(4);
 }
 
-CardReader& CardReader::onSuccessfulAttempt(void (*callback)(Card)) {
+CardReader& CardReader::onSuccessfulAttempt(void (*callback)(const Card&)) {
     successfulAttemptCallback = callback;
 
     return *this;
