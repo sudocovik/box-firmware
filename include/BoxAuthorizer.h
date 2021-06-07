@@ -7,16 +7,12 @@ class BoxAuthorizer {
     public: class Result;
 
     private:
-        String _uid;
-
         static BoxAuthorizer::Result authorizationSucceeded();
 
         static BoxAuthorizer::Result authorizationFailed();
 
     public:
-        BoxAuthorizer& giveUid(const String& uid);
-
-        BoxAuthorizer::Result authorize();
+        BoxAuthorizer::Result authorize(const String& uid);
 };
 
 class BoxAuthorizer::Result {

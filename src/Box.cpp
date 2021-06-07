@@ -25,6 +25,5 @@ void Box::lock() const {
 }
 
 BoxAuthorizer::Result Box::authorize(const Card &card) {
-    return _authorizer.giveUid(card.toUid())
-               .authorize();
+    return _authorizer.authorize(card.toUid());
 }

@@ -1,12 +1,6 @@
 #include <BoxAuthorizer.h>
 #include <POST.h>
 
-BoxAuthorizer &BoxAuthorizer::giveUid(const String& uid) {
-    _uid = uid;
-
-    return *this;
-}
-
 BoxAuthorizer::Result BoxAuthorizer::authorizationSucceeded() {
     return BoxAuthorizer::Result(true);
 }
@@ -15,10 +9,10 @@ BoxAuthorizer::Result BoxAuthorizer::authorizationFailed() {
     return BoxAuthorizer::Result(false);
 }
 
-BoxAuthorizer::Result BoxAuthorizer::authorize() {
+BoxAuthorizer::Result BoxAuthorizer::authorize(const String &uid) {
     return POST::request()
                  .to("http://192.168.1.2/api/box/authorize")
-                 .withPayload("uid=" + _uid)
+                 .withPayload("uid=" + uid)
                  .responseCode() == 200
                                   ? authorizationSucceeded()
                                   : authorizationFailed();
