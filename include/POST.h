@@ -24,6 +24,8 @@ class POST {
         POST& withPayload(const String& payload);
 
         String response();
+
+        uint8_t responseCode();
 };
 
 #endif

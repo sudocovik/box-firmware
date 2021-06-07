@@ -32,3 +32,7 @@ String POST::response() {
            ? _httpClient.getString()
            : "";
 }
+
+uint8_t POST::responseCode() {
+    return _httpClient.POST(_payload);
+}
