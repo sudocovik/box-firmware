@@ -1,6 +1,5 @@
 #include <Card.h>
 #include <MFRC522.h>
-#include <CardAuthorizer.h>
 
 Card::Card(MFRC522::Uid uid) {
     UID = uidToHexString(uid);
@@ -32,10 +31,3 @@ bool Card::isUidValid() {
 String Card::toUid() const {
     return UID;
 }
-
-CardAuthorizer::Result Card::authorize() const {
-    return CardAuthorizer()
-            .giveUid(toUid())
-            .authorize();
-}
-

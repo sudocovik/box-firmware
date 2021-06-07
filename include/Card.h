@@ -2,7 +2,6 @@
 #define CARD_H
 
 #include <MFRC522.h>
-#include <CardAuthorizer.h>
 
 class Card {
     private:
@@ -16,8 +15,6 @@ class Card {
         bool isUidValid();
 
         String toUid() const;
-
-        CardAuthorizer::Result authorize() const;
 };
 
 #endif
