@@ -25,14 +25,6 @@ POST& POST::withPayload(const String& payload) {
     return *this;
 }
 
-String POST::response() {
-    int responseCode = _httpClient.POST(_payload);
-
-    return responseCode == 200
-           ? _httpClient.getString()
-           : "";
-}
-
 uint8_t POST::responseCode() {
     return _httpClient.POST(_payload);
 }
