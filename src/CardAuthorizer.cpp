@@ -17,7 +17,7 @@ CardAuthorizer::Result CardAuthorizer::authorizationFailed() {
 
 CardAuthorizer::Result CardAuthorizer::authorize() {
     return POST::request()
-                 .to("http://192.168.1.2/api/authorize-card")
+                 .to("http://192.168.1.2/api/box/authorize")
                  .withPayload("uid=" + _uid)
                  .response().equals("yaay!")
                             ? authorizationSucceeded()
