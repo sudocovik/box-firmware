@@ -52,6 +52,7 @@ void CardReader::tryReadingTheCard() {
     Card card = Card(reader.uid);
 
     reader.PICC_HaltA();
+    reader.PCD_StopCrypto1();
 
     if (card.isUidValid()) {
         successfulAttemptCallback(card);
