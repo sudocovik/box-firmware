@@ -1,9 +1,10 @@
 #include <Arduino.h>
 #include <Box.h>
 
-Box::Box(byte lockPin, byte statePin) {
+Box::Box(byte lockPin, byte statePin, BoxAuthorizer& authorizer) {
     _lockPin = lockPin;
     _statePin = statePin;
+    _authorizer = authorizer;
 }
 
 void Box::configurePins() const {
@@ -21,4 +22,8 @@ void Box::unlock() const {
 
 void Box::lock() const {
     digitalWrite(_lockPin, LOW);
+}
+
+BoxAuthorizer::Result Box::authorize(const Card &card) {
+    return _authorizer.authorize(card.toUid());
 }

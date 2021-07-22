@@ -17,8 +17,10 @@
 #define ACCESS_POINT_NAME       "BoxAP"
 #define ACCESS_POINT_PASSWORD   "password"
 
+
+BoxAuthorizer authorizer = BoxAuthorizer();
+Box box = Box(LOCK_PIN, STATE_PIN, authorizer);
 CardReader reader = CardReader(SS_PIN, RST_PIN);
-Box box = Box(LOCK_PIN, STATE_PIN);
 StatusLED LED = StatusLED(GREEN_PIN, RED_PIN, BLUE_PIN);
 
 
@@ -53,16 +55,9 @@ void tryToAuthorizeAccess(const Card& card) {
 
     Serial.println("Box is closed, authorizing card with the server...");
 
-    /* box.authorize(card)
-            .onSuccess(grantAccess)
-            .onFailure(notifyForbiddenAccess); */
-
-    short randNumber = random(1, 100);
-
-    if (randNumber > 50)
-        grantAccess();
-    else
-        notifyForbiddenAccess();
+    box.authorize(card)
+       .onSuccess(grantAccess)
+       .onFailure(notifyForbiddenAccess);
 }
 
 void indicateCardReadingFailure() {

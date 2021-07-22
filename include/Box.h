@@ -1,6 +1,7 @@
 #ifndef BOX_H
 #define BOX_H
 
+#include <BoxAuthorizer.h>
 #include <Card.h>
 
 class Box {
@@ -9,10 +10,13 @@ class Box {
 
         byte _statePin;
 
+        BoxAuthorizer _authorizer;
+
     public:
         Box(
             byte lockPin,
-            byte statePin
+            byte statePin,
+            BoxAuthorizer& authorizer
         );
 
         void configurePins() const;
@@ -22,6 +26,8 @@ class Box {
         void unlock() const;
 
         void lock() const;
+
+        BoxAuthorizer::Result authorize(const Card& card);
 };
 
 #endif
