@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Box.h>
 #include <CardReader.h>
+#include <NetworkManager.h>
 #include <StatusLED.h>
 
 #define RST_PIN 0
@@ -13,6 +14,8 @@
 #define RED_PIN     26
 #define BLUE_PIN    25
 
+#define ACCESS_POINT_NAME       "BoxAP"
+#define ACCESS_POINT_PASSWORD   "password"
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
@@ -83,6 +86,11 @@ void setup() {
     reader.onSuccessfulAttempt(tryToAuthorizeAccess)
           .onFailedAttempt(indicateCardReadingFailure)
           .onAnyAttempt(resetLED);
+
+    NetworkManager manager = NetworkManager(ACCESS_POINT_NAME, ACCESS_POINT_PASSWORD);
+    manager.connect([]() {
+        Serial.println("Successfully connected to network!");
+    });
 }
 
 void loop() {
