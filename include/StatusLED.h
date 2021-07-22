@@ -9,8 +9,11 @@ class StatusLED {
 
         byte _redPin;
 
+        byte _bluePin;
+
         const uint8_t _greenChannel = 0;
         const uint8_t _redChannel = 1;
+        const uint8_t _blueChannel = 2;
 
         void greenOn() const;
 
@@ -20,10 +23,14 @@ class StatusLED {
 
         void redOff() const;
 
+        void blueOn() const;
+
+        void blueOff() const;
     public:
         StatusLED(
             byte greenPin,
-            byte redPin
+            byte redPin,
+            byte bluePin
         );
 
         void configurePins() const;

@@ -7,15 +7,16 @@
 #define SS_PIN 5
 
 #define LOCK_PIN 13
-#define STATE_PIN   25
+#define STATE_PIN   33
 
 #define GREEN_PIN   27
 #define RED_PIN     26
+#define BLUE_PIN    25
 
 
 CardReader reader = CardReader(SS_PIN, RST_PIN);
 Box box = Box(LOCK_PIN, STATE_PIN);
-StatusLED LED = StatusLED(GREEN_PIN, RED_PIN);
+StatusLED LED = StatusLED(GREEN_PIN, RED_PIN, BLUE_PIN);
 
 
 void grantAccess() {

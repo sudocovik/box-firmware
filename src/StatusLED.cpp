@@ -1,24 +1,27 @@
 #include <StatusLED.h>
 #include <Arduino.h>
 
-StatusLED::StatusLED(byte greenPin, byte redPin) {
+StatusLED::StatusLED(byte greenPin, byte redPin, byte bluePin) {
     _greenPin = greenPin;
     _redPin = redPin;
+    _bluePin = bluePin;
 }
 
 void StatusLED::configurePins() const {
-    pinMode(_redPin, OUTPUT);
-
     ledcSetup(_greenChannel, 5000, 8);
     ledcAttachPin(_greenPin, _greenChannel);
 
     ledcSetup(_redChannel, 5000, 8);
     ledcAttachPin(_redPin, _redChannel);
+
+    ledcSetup(_blueChannel, 5000, 8);
+    ledcAttachPin(_bluePin, _blueChannel);
 }
 
 StatusLED StatusLED::idle() const {
-    ledcWrite(_greenChannel, 10);
-    redOff();
+    ledcWrite(_redChannel, 255);
+    ledcWrite(_greenChannel, 127);
+    ledcWrite(_blueChannel, 0);
 
     return *this;
 }
@@ -37,6 +40,14 @@ void StatusLED::redOn() const {
 
 void StatusLED::redOff() const {
     ledcWrite(_redChannel, 0);
+}
+
+void StatusLED::blueOn() const {
+    ledcWrite(_blueChannel, 255);
+}
+
+void StatusLED::blueOff() const {
+    ledcWrite(_blueChannel, 0);
 }
 
 StatusLED StatusLED::flashGreen(unsigned short int times) const {
