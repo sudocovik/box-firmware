@@ -4,10 +4,10 @@
 #include <NetworkManager.h>
 #include <StatusLED.h>
 
-#define RST_PIN 0
-#define SS_PIN 5
+#define RST_PIN     0
+#define SS_PIN      5
 
-#define LOCK_PIN 13
+#define LOCK_PIN    13
 #define STATE_PIN   33
 
 #define RED_PIN     27
