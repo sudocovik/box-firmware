@@ -10,8 +10,8 @@
 #define LOCK_PIN 13
 #define STATE_PIN   33
 
-#define GREEN_PIN   27
-#define RED_PIN     26
+#define RED_PIN     27
+#define GREEN_PIN   26
 #define BLUE_PIN    25
 
 #define ACCESS_POINT_NAME       "BoxAP"
