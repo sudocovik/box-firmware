@@ -45,8 +45,8 @@ void CardReader::tryReadingTheCard() {
     }
 
     /*
-     *   If we got here it means the card is present and
-     *   we should try to read UID and convert it to human readable HEX string.
+     *   If we got here it means the card is present.
+     *   We should try to read UID and convert it to human-readable HEX string.
      *   Disengaging with the card is required because we read all the information needed.
      */
     Card card = Card(reader.uid);
