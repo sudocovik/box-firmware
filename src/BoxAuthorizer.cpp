@@ -11,7 +11,7 @@ BoxAuthorizer::Result BoxAuthorizer::authorizationFailed() {
 
 BoxAuthorizer::Result BoxAuthorizer::authorize(const String &uid) {
     return POST::request()
-                 .to("http://165.227.172.159/api/box/authorize")
+                 .to("http://144.126.244.106/api/box/authorize")
                  .withPayload("uid=" + uid)
                  .responseCode() == 200
                                   ? authorizationSucceeded()
